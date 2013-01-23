@@ -361,6 +361,9 @@ int nandroid_backup(const char* backup_path)
     if (0 != (ret = nandroid_backup_partition(backup_path, "/recovery")))
         return ret;
 
+    if (0 != (ret = nandroid_backup_partition(backup_path, "/custpack")))
+        return ret;
+
     Volume *vol = volume_for_path("/wimax");
     if (vol != NULL && 0 == stat(vol->device, &s))
     {
@@ -711,7 +714,10 @@ int nandroid_restore(const char* backup_path, int restore_boot, int restore_syst
 
     if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/data")))
         return ret;
-        
+
+    if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/custpack")))
+        return ret;
+
     if (has_datadata()) {
         if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/datadata")))
             return ret;
@@ -723,7 +729,7 @@ int nandroid_restore(const char* backup_path, int restore_boot, int restore_syst
     if (restore_cache && 0 != (ret = nandroid_restore_partition_extended(backup_path, "/cache", 0)))
         return ret;
 
-    if (restore_sdext && 0 != (ret = nandroid_restore_partition(backup_path, "/sd-ext")))
+    if (restore_sdext && 0 != (ret = nandroid_restore_partition(backup_path, "/custpack")))
         return ret;
 
     sync();

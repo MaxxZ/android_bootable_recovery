@@ -430,7 +430,7 @@ void show_nandroid_delete_menu(const char* path)
     }
 }
 
-#define MAX_NUM_USB_VOLUMES 3
+#define MAX_NUM_USB_VOLUMES 1
 #define LUN_FILE_EXPANDS    2
 
 struct lun_node {
@@ -558,9 +558,9 @@ void show_mount_usb_storage_menu()
 {
     // Build a list of Volume objects; some or all may not be valid
     Volume* volumes[MAX_NUM_USB_VOLUMES] = {
-        volume_for_path("/sdcard"),
+        volume_for_path("/sdcard") /* ,
         volume_for_path("/emmc"),
-        volume_for_path("/external_sd")
+        volume_for_path("/external_sd") */
     };
 
     // Enable USB storage
@@ -992,7 +992,7 @@ void show_nandroid_advanced_restore_menu(const char* path)
                             "Restore system",
                             "Restore data",
                             "Restore cache",
-                            "Restore sd-ext",
+                            "Restore custpack",
                             "Restore wimax",
                             NULL
     };
@@ -1024,7 +1024,7 @@ void show_nandroid_advanced_restore_menu(const char* path)
                 nandroid_restore(file, 0, 0, 0, 1, 0, 0);
             break;
         case 4:
-            if (confirm_selection(confirm_restore, "Yes - Restore sd-ext"))
+            if (confirm_selection(confirm_restore, "Yes - Restore custpack"))
                 nandroid_restore(file, 0, 0, 0, 0, 1, 0);
             break;
         case 5:
@@ -1417,6 +1417,7 @@ void create_fstab()
     write_fstab_root("/system", file);
     write_fstab_root("/sdcard", file);
     write_fstab_root("/sd-ext", file);
+    write_fstab_root("/custpack", file);
     fclose(file);
     LOGI("Completed outputting fstab.\n");
 }

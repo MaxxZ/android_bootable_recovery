@@ -147,6 +147,8 @@ static int get_framebuffer(GGLSurface *fb)
 
     fb++;
 
+    return fd; // samm FIXME
+
     /* check if we can use double buffering */
     if (vi.yres * fi.line_length * 2 > fi.smem_len)
         return fd;
