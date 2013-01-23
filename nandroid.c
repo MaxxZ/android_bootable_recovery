@@ -715,9 +715,6 @@ int nandroid_restore(const char* backup_path, int restore_boot, int restore_syst
     if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/data")))
         return ret;
 
-    if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/custpack")))
-        return ret;
-
     if (has_datadata()) {
         if (restore_data && 0 != (ret = nandroid_restore_partition(backup_path, "/datadata")))
             return ret;
