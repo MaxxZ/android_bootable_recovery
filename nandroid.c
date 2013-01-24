@@ -659,7 +659,8 @@ int nandroid_restore_partition(const char* backup_path, const char* root) {
     return nandroid_restore_partition_extended(backup_path, root, 1);
 }
 
-int nandroid_restore(const char* backup_path, int restore_boot, int restore_system, int restore_data, int restore_cache, int restore_sdext, int restore_wimax)
+int nandroid_restore(const char* backup_path, int restore_boot, int restore_system, int restore_data,
+    int restore_cache, int restore_sdext, int restore_wimax, int restore_custpack)
 {
     ui_set_background(BACKGROUND_ICON_INSTALLING);
     ui_show_indeterminate_progress();
@@ -726,7 +727,10 @@ int nandroid_restore(const char* backup_path, int restore_boot, int restore_syst
     if (restore_cache && 0 != (ret = nandroid_restore_partition_extended(backup_path, "/cache", 0)))
         return ret;
 
-    if (restore_sdext && 0 != (ret = nandroid_restore_partition(backup_path, "/custpack")))
+    if (restore_sdext && 0 != (ret = nandroid_restore_partition(backup_path, "/sd-ext")))
+        return ret;
+
+    if (restore_custpack && 0 != (ret = nandroid_restore_partition(backup_path, "/custpack")))
         return ret;
 
     sync();
@@ -762,7 +766,7 @@ int nandroid_main(int argc, char** argv)
     {
         if (argc != 3)
             return nandroid_usage();
-        return nandroid_restore(argv[2], 1, 1, 1, 1, 1, 0);
+        return nandroid_restore(argv[2], 1, 1, 1, 1, 1, 0, 1);
     }
     
     return nandroid_usage();
