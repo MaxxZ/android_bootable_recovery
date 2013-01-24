@@ -430,7 +430,7 @@ void show_nandroid_delete_menu(const char* path)
     }
 }
 
-#define MAX_NUM_USB_VOLUMES 1
+#define MAX_NUM_USB_VOLUMES 3
 #define LUN_FILE_EXPANDS    2
 
 struct lun_node {
@@ -558,9 +558,9 @@ void show_mount_usb_storage_menu()
 {
     // Build a list of Volume objects; some or all may not be valid
     Volume* volumes[MAX_NUM_USB_VOLUMES] = {
-        volume_for_path("/sdcard") /* ,
+        volume_for_path("/sdcard"),
         volume_for_path("/emmc"),
-        volume_for_path("/external_sd") */
+        volume_for_path("/external_sd")
     };
 
     // Enable USB storage
